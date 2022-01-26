@@ -35,7 +35,7 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  // Reset choices & increase turn
+  // Reset choices after no match & increase turn
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -60,7 +60,7 @@ function App() {
         });
         resetTurn();
       } else {
-        resetTurn();
+        setTimeout(() => resetTurn(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
@@ -76,7 +76,12 @@ function App() {
 
         {cards.map(card => (
           // Add card and handleChoice as props to SingleCard
-          <SingleCard key={card.id} card={card} handleChoice={handleChoice} />
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+          />
         ))}
       </div>
     </div>
